@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IGenericAPIResponse, IShortUrlResponse } from "./interfaces/url";
 import { CopyIcon } from "./assets/copy";
 import { CopiedIcon } from "./assets/copied";

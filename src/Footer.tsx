@@ -1,4 +1,3 @@
-import React from "react";
 import { SecureIcon } from "./assets/secure";
 import { FastIcon } from "./assets/fast";
 import { ReliableIcon } from "./assets/reliable";
