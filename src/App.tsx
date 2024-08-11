@@ -16,6 +16,8 @@ const isValidUrl = (url: string) => {
   return urlPattern.test(url);
 };
 
+const apiUrl = import.meta.env.VITE_API_KEY;
+
 function App() {
   const [url, setUrl] = useState("");
   const [shortUrlData, setShortUrlData] = useState<IShortUrlResponse>();
@@ -60,7 +62,7 @@ function App() {
       return;
     }
     setIsLoading(true);
-    fetch(`http://localhost:3300/url/short-url`, {
+    fetch(`${apiUrl}/url/short-url`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -168,13 +170,13 @@ function App() {
                           {respectiveUrl || ""}
                         </p>
                       </a>
-                      <div className="ml-2 cursor-pointer" onClick={handleCopy}>
+                      <span className="ml-2 cursor-pointer" onClick={handleCopy}>
                         {!isCopied ? (
                           <CopyIcon currentColor={"gray"} />
                         ) : (
                           <CopiedIcon currentColor={"gray"} />
                         )}
-                      </div>
+                      </span>
                     </span>
                   </p>
                 </div>
