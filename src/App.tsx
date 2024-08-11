@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { IGenericAPIResponse, IShortUrlResponse } from "./interfaces/url";
 import { CopyIcon } from "./assets/copy";
 import { CopiedIcon } from "./assets/copied";
@@ -9,6 +9,12 @@ enum E_CURRENT_STEP {
   SHORTEN = "1",
   RETRIEVE = "2",
 }
+
+const isValidUrl = (url: string) => {
+  const urlPattern =
+    /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)([\w\-._~:/?#[\]@!$&'()*+,;=.]+)?$/;
+  return urlPattern.test(url);
+};
 
 function App() {
   const [url, setUrl] = useState("");
@@ -45,6 +51,14 @@ function App() {
   };
 
   const shortenUrl = () => {
+    const result = isValidUrl(url);
+    if (!result) {
+      setError({
+        isError: true,
+        message: url.length ? "Please enter a valid URL" : "Please enter a URL",
+      });
+      return;
+    }
     setIsLoading(true);
     fetch(`http://localhost:3300/url/short-url`, {
       method: "POST",
@@ -86,6 +100,10 @@ function App() {
       isShorting ? E_CURRENT_STEP.RETRIEVE : E_CURRENT_STEP.SHORTEN
     );
   };
+
+  React.useEffect(() => {
+    document.title = "Url Shortener";
+  }, []);
 
   return (
     <div className="bg-gradient-to-r from-slate-400 to-slate-300 min-h-screen h-1/1 w-1/1 flex flex-col justify-between items-center bg-gray-100">
